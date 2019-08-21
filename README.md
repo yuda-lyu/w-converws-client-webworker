@@ -24,7 +24,7 @@ To view documentation or get support, visit [docs](https://yuda-lyu.github.io/w-
 
 #### Example for w-converws-server:
 Use `w-converws-server` of [`w-converws`](https://github.com/yuda-lyu/w-converws) to build WebSocket Server.
-> **Link:** [[dev source code](https://github.com/yuda-lyu/w-converws/blob/master/srv.mjs)]
+> **Link:** [[dev source code](https://github.com/yuda-lyu/w-converws-client-webworker/blob/master/srv.mjs)]
 
 #### Example for w-converws-client-webworker:
 > **Link:** [[dev source code](https://github.com/yuda-lyu/w-converws-client-webworker/blob/master/web.html)]
