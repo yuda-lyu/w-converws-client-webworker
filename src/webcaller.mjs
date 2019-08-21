@@ -1,0 +1,256 @@
+import EventEmitter from 'wolfy87-eventemitter'
+import genID from 'wsemi/src/genID.mjs'
+import genPm from 'wsemi/src/genPm.mjs'
+import isfun from 'wsemi/src/isfun.mjs'
+import b642u8arr from 'wsemi/src/b642u8arr.mjs'
+
+
+//codeB64, 此處需提供worker執行程式碼, 因有特殊符號編譯困難, 故需先轉base64再使用
+let codeB64 = '{codeB64}'
+
+//codeU8A
+let codeU8A = b642u8arr(codeB64)
+
+
+/**
+ * 於瀏覽器(Browser)通過Web Worker建立WebSocket使用者端物件
+ *
+ * @class
+ * @param {Object} opt 輸入設定參數物件
+ * @param {String} [opt.url='ws://localhost:8080'] 輸入WebSocket伺服器ws網址，預設為'ws://localhost:8080'
+ * @param {String} [opt.token='*'] 輸入使用者認證用token，預設為'*'
+ * @param {Integer} [opt.strSplitLength=1000000] 輸入傳輸封包長度整數，預設為1000000
+ * @returns {Object} 回傳通訊物件，可監聽事件open、openOnce、close、error、reconn、broadcast、deliver，可使用函數execute、broadcast、deliver
+ * @example
+ *
+ * <script src="dist/w-converws-client-webworker.umd.js"></script>
+ *
+ * let opt = {
+ *     url: 'ws://localhost:8080',
+ *     token: '*',
+ * }
+ *
+ * //new
+ * let WConverwsClient = window['w-converws-client-webworker']
+ * let wo = new WConverwsClient(opt)
+ *
+ * wo.on('open', function() {
+ *     console.log('client web: open')
+ * })
+ * wo.on('openOnce', function() {
+ *     console.log('client web: openOnce')
+ *
+ *     //execute
+ *     wo.execute('add', { p1: 1, p2: 2 },
+ *         function (prog) {
+ *             console.log('client web: execute prog=', prog)
+ *         })
+ *         .then(function(r) {
+ *             console.log('client web: execute: add=', r)
+ *         })
+ *
+ *     //broadcast
+ *     wo.broadcast('client web broadcast hi', function (prog) {
+ *         console.log('client web: broadcast prog=', prog)
+ *     })
+ *
+ *     //deliver
+ *     wo.deliver('client deliver hi', function (prog) {
+ *         console.log('client web: deliver prog=', prog)
+ *     })
+ *
+ * })
+ * wo.on('close', function() {
+ *     console.log('client web: close')
+ * })
+ * wo.on('error', function(err) {
+ *     console.log('client web: error=', err)
+ * })
+ * wo.on('reconn', function() {
+ *     console.log('client web: reconn')
+ * })
+ * wo.on('broadcast', function(data) {
+ *     console.log('client web: broadcast=', data)
+ * })
+ * // wo.on('deliver', function(data) { //伺服器目前無法針對client直接deliver
+ * //     console.log('client web: deliver=', data)
+ * // })
+ *
+ */
+function WConverwsClientWebworker(opt) {
+
+    //ee
+    let ee = new EventEmitter()
+
+
+    //wk
+    let blob = new Blob([codeU8A], { type: 'text/javascript' })
+    let url = URL.createObjectURL(blob)
+    let wk = new Worker(url)
+    //let wk = new Worker('./wkapi/wscs_webworker.mjs')
+
+
+    function init(opt) {
+
+        //_id
+        let _id = genID()
+
+        //msg
+        let msg = {
+            _id,
+            type: 'init',
+            input: opt,
+        }
+
+        //postMessage
+        wk.postMessage(msg)
+
+    }
+    init(opt)
+
+
+    function terminate() {
+        wk.terminate()
+        wk = undefined
+    }
+
+
+    function execute(func, input, callback) {
+
+        //pm
+        let pm = genPm()
+
+        //_id
+        let _id = genID()
+
+        //msg
+        let msg = {
+            _id,
+            type: 'execute',
+            func,
+            input,
+        }
+
+        //postMessage
+        wk.postMessage(msg)
+
+        //等待結果回傳
+        ee.on(_id, function (data) {
+
+            //prog
+            if (data.prog) {
+
+                if (isfun(callback)) {
+
+                    //callback
+                    callback(data.prog)
+
+                }
+
+            }
+            //output
+            else {
+
+                //resolve
+                pm.resolve(data.output)
+
+                //removeAllListeners
+                ee.removeAllListeners(_id)
+
+            }
+
+        })
+
+        return pm
+    }
+
+
+    function core(type, input, callback) {
+
+        //pm
+        let pm = genPm()
+
+        //_id
+        let _id = genID()
+
+        //msg
+        let msg = {
+            _id,
+            type,
+            input,
+        }
+
+        //postMessage
+        wk.postMessage(msg)
+
+        //等待結果回傳
+        ee.on(_id, function (data) {
+
+            //callback
+            if (isfun(callback)) {
+                callback(data.prog)
+            }
+
+            //finish
+            if (data.prog === 100) {
+
+                //resolve
+                pm.resolve()
+
+                //removeAllListeners
+                ee.removeAllListeners(_id)
+
+            }
+
+        })
+
+        return pm
+    }
+
+
+    function broadcast(input, callback) {
+        return core('broadcast', input, callback)
+    }
+
+
+    function deliver(input, callback) {
+        return core('deliver', input, callback)
+    }
+
+
+    wk.onmessage = function (e) {
+
+        //data
+        let data = e.data
+
+        //_id
+        let _id = data._id
+
+        if (_id !== 'system') {
+
+            //emit
+            ee.emit(_id, data)
+
+        }
+        else {
+
+            //emit
+            ee.emit(data.func, data.data)
+
+        }
+
+    }
+
+
+    //save
+    ee.execute = execute
+    ee.broadcast = broadcast
+    ee.deliver = deliver
+    ee.terminate = terminate
+
+
+    return ee
+}
+
+
+export default WConverwsClientWebworker

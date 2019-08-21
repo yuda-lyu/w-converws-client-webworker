@@ -1,0 +1,84 @@
+# w-converws-client-webworker
+An operator for websocket in nodejs and browser.
+
+![language](https://img.shields.io/badge/language-JavaScript-orange.svg) 
+[![npm version](http://img.shields.io/npm/v/w-converws-client-webworker.svg?style=flat)](https://npmjs.org/package/w-converws-client-webworker) 
+[![Build Status](https://travis-ci.org/yuda-lyu/w-converws-client-webworker.svg?branch=master)](https://travis-ci.org/yuda-lyu/w-converws-client-webworker) 
+[![license](https://img.shields.io/npm/l/w-converws-client-webworker.svg?style=flat)](https://npmjs.org/package/w-converws-client-webworker) 
+[![gzip file size](http://img.badgesize.io/yuda-lyu/w-converws-client-webworker/master/dist/w-converws-client-webworker-server.umd.js.svg?compression=gzip)](https://github.com/yuda-lyu/w-converws-client-webworker)
+[![npm download](https://img.shields.io/npm/dt/w-converws-client-webworker.svg)](https://npmjs.org/package/w-converws-client-webworker) 
+[![jsdelivr download](https://img.shields.io/jsdelivr/npm/hm/w-converws-client-webworker.svg)](https://www.jsdelivr.com/package/npm/w-converws-client-webworker)
+
+## Documentation
+To view documentation or get support, visit [docs](https://yuda-lyu.github.io/w-converws-client-webworker/WConverwsClientWebworker.html).
+
+## Installation
+
+### In a browser(UMD module):
+> **Note:** `w-converws-client-webworker` does't depend on any package.
+
+[Necessary] Add script for w-converws-client-webworker.
+```alias
+<script src="https://cdn.jsdelivr.net/npm/w-converws-client-webworker@1.0.0/dist/w-converws-client-webworker.umd.js"></script>
+```
+#### Example for w-converws-client-webworker:
+> **Link:** [[dev source code](https://github.com/yuda-lyu/w-converws-client-webworker/blob/master/web.html)]
+```alias
+let opt = {
+    url: 'ws://localhost:8080',
+    token: '*',
+}
+
+//new
+let WConverwsClient=window['w-converws-client-webworker']
+let wo = new WConverwsClient(opt)
+
+wo.on('open', function() {
+    logData('client web: open')
+})
+wo.on('openOnce', function() {
+    logData('client web: openOnce')
+
+    //execute
+    wo.execute('add', { p1: 1, p2: 2 },
+        function (prog) {
+            logData('client web: execute prog=', prog)
+        })
+        .then(function(r) {
+            logData('client web: execute: add=', r)
+        })
+
+    //broadcast
+    wo.broadcast('client web: broadcast: hi', function (prog) {
+        logData('client web: broadcast prog=', prog)
+    })
+
+    //deliver
+    wo.deliver('client web: deliver: hi', function (prog) {
+        logData('client web: deliver prog=', prog)
+    })
+
+})
+wo.on('close', function() {
+    logData('client web: close')
+})
+wo.on('error', function(err) {
+    logData('client web: error=', err)
+})
+wo.on('reconn', function() {
+    logData('client web: reconn')
+})
+wo.on('broadcast', function(data) {
+    logData('client web: broadcast=', data)
+})
+// wo.on('deliver', function(data) { //can not receive deliver in client
+//     logData('client web: deliver=', data)
+// })
+
+// client web: open
+// client web: openOnce
+// client web: execute prog=100
+// client web: broadcast prog=100
+// client web: deliver prog=100
+// client web: execute: add=3
+```
