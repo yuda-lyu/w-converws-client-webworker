@@ -1,5 +1,5 @@
 # w-converws-client-webworker
-An operator for websocket in nodejs and browser.
+A webworker wrapper for client of w-converws in browser. It is an enhanced package of w-converws-client.
 
 ![language](https://img.shields.io/badge/language-JavaScript-orange.svg) 
 [![npm version](http://img.shields.io/npm/v/w-converws-client-webworker.svg?style=flat)](https://npmjs.org/package/w-converws-client-webworker) 
@@ -21,8 +21,14 @@ To view documentation or get support, visit [docs](https://yuda-lyu.github.io/w-
 ```alias
 <script src="https://cdn.jsdelivr.net/npm/w-converws-client-webworker@1.0.0/dist/w-converws-client-webworker.umd.js"></script>
 ```
+
+#### Example for w-converws-server:
+Use `w-converws-server` of [`w-converws`](https://github.com/yuda-lyu/w-converws) to build WebSocket Server.
+> **Link:** [[dev source code](https://github.com/yuda-lyu/w-converws/blob/master/srv.mjs)]
+
 #### Example for w-converws-client-webworker:
 > **Link:** [[dev source code](https://github.com/yuda-lyu/w-converws-client-webworker/blob/master/web.html)]
+
 ```alias
 let opt = {
     url: 'ws://localhost:8080',
