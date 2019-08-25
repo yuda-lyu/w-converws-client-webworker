@@ -1,12 +1,10 @@
-
-//self.importScripts('w-converws-client.umd.js')
-
-
 //WConverwsClient
+//self.importScripts('w-converws-client.umd.js')
 //let WConverwsClient = self['w-converws-client']
 
 
-//此處需引用w-converws-client的iife程式碼直接取得WConverwsClient
+//此處需引用w-converws-client的iife及壓縮過的程式碼, 直接取得WConverwsClient
+//此處還需要添加promise, 因為可能用於ie11環境
 
 
 //wo, bInit
@@ -23,14 +21,14 @@ function init(opt) {
     }
 
     //wo
-    wo = new WConverwsClient(opt)
+    wo = new WConverwsClient(opt) //ie11會因為websocket於webworker內, 被視為需受安全性控管, 得將伺服器加入信賴區域, 或是移除限制
     wo.on('open', function() {
         //console.log('wk: open')
-        systemMessage('open')
+        sendSystemMessage('open')
     })
     wo.on('openOnce', function() {
         //console.log('wk: openOnce')
-        systemMessage('openOnce')
+        sendSystemMessage('openOnce')
 
         //bInit
         bInit = true
@@ -38,30 +36,36 @@ function init(opt) {
     })
     wo.on('close', function() {
         //console.log('wk: close')
-        systemMessage('close')
+        sendSystemMessage('close')
     })
     wo.on('error', function(err) {
         //console.log('wk: error', err)
-        systemMessage('error', err)
+        sendSystemMessage('error', err)
     })
     wo.on('reconn', function() {
         //console.log('wk: reconn')
-        systemMessage('reconn')
+        sendSystemMessage('reconn')
     })
     wo.on('broadcast', function(data) {
         //console.log('wk: broadcast', data)
-        systemMessage('broadcast', data)
+        sendSystemMessage('broadcast', data)
     })
     wo.on('deliver', function(data) {
         //console.log('wk: deliver', data)
-        systemMessage('deliver', data)
+        sendSystemMessage('deliver', data)
     })
 
 }
 
 
-//systemMessage
-function systemMessage(func, data = null) {
+//sendMessage
+function sendMessage(data) {
+    self.postMessage(data)
+}
+
+
+//sendSystemMessage
+function sendSystemMessage(func, data = null) {
 
     //msg
     let msg = {
@@ -70,14 +74,14 @@ function systemMessage(func, data = null) {
         data
     }
 
-    //postMessage
-    postMessage(msg)
+    //sendMessage
+    sendMessage(msg)
 
 }
 
 
 //onmessage
-onmessage = function (e) {
+self.onmessage = function (e) {
 
     //input
     let data = e.data
@@ -106,8 +110,8 @@ onmessage = function (e) {
                     output: null,
                 }
 
-                //postMessage
-                postMessage(msg)
+                //sendMessage
+                sendMessage(msg)
 
                 //clearInterval
                 clearInterval(t)
@@ -137,8 +141,8 @@ onmessage = function (e) {
                 prog,
             }
 
-            //postMessage
-            postMessage(msg)
+            //sendMessage
+            sendMessage(msg)
 
         })
             .then(function(output) {
@@ -150,8 +154,8 @@ onmessage = function (e) {
                     output,
                 }
 
-                //postMessage
-                postMessage(msg)
+                //sendMessage
+                sendMessage(msg)
 
             })
 
@@ -173,14 +177,14 @@ onmessage = function (e) {
                 prog,
             }
 
-            //postMessage
-            postMessage(msg)
+            //sendMessage
+            sendMessage(msg)
 
         })
 
     }
     else {
-        systemMessage('error', `type error: ${type}`)
+        sendSystemMessage('error', `type error: ${type}`)
     }
 
 }

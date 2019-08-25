@@ -42,5 +42,7 @@ module.exports = {
         'no-new': 'off',
         'prefer-const': 'off',
         'quote-props': ['error', 'consistent'],
+        'dot-notation': 'off',
+        'standard/no-callback-literal': 'off',
     }
 };

@@ -79,6 +79,7 @@ let codeU8A = b642u8arr(codeB64)
  */
 function WConverwsClientWebworker(opt) {
 
+
     //ee
     let ee = new EventEmitter()
 
