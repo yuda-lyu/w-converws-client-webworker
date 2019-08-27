@@ -1,6 +1,6 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A webworker wrapper for client of w-converws in browser.",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {},
@@ -14,7 +14,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
     "@babel/runtime": "^7.5.5",
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "^10.0.3",
     "core-js": "^3.2.1",
     "docdash": "^1.1.1",
     "eslint": "^6.2.2",
@@ -42,9 +42,9 @@
     "rollup-plugin-vue": "^5.0.1",
     "rollup-plugin-vue-template-compiler": "^1.0.3",
     "vue-template-compiler": "^2.6.10",
-    "w-converws": "^1.0.11",
+    "w-converws": "^1.0.15",
     "wolfy87-eventemitter": "^5.2.6",
-    "wsemi": "^1.2.19"
+    "wsemi": "^1.2.21"
   },
   "scripts": {
     "test": "mocha --require @babel/register",
