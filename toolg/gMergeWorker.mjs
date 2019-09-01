@@ -7,7 +7,7 @@ import replace from 'wsemi/src/replace.mjs'
 function getCodePromise() {
 
     //fnPromise
-    let fnPromise = 'node_modules/promise-polyfill/dist/polyfill.min.js'
+    let fnPromise = './node_modules/promise-polyfill/dist/polyfill.min.js'
 
     //codePromise
     let codePromise = fs.readFileSync(fnPromise, 'utf8')
@@ -19,7 +19,7 @@ function getCodePromise() {
 function getCodeIIFE() {
 
     //fnIIFE
-    let fnIIFE = 'srcTemp/WConverwsClient.iife.js'
+    let fnIIFE = './srcTemp/WConverwsClient.iife.js'
 
     //codeIIFE
     let codeIIFE = fs.readFileSync(fnIIFE, 'utf8')
@@ -34,7 +34,7 @@ function getCodeIIFE() {
 function getCodeWorker() {
 
     //fnWorker
-    let fnWorker = 'src/webworker.mjs'
+    let fnWorker = './src/webworker.mjs'
 
     //codeWorker
     let codeWorker = fs.readFileSync(fnWorker, 'utf8')
@@ -80,7 +80,7 @@ function main() {
     codeMerge = clearCode(codeMerge)
 
     //fnMerge
-    let fnMerge = 'srcTemp/WConverwsClient_WebworkerMerge.mjs'
+    let fnMerge = './srcTemp/WConverwsClient_WebworkerMerge.mjs'
 
     //save
     fs.writeFileSync(fnMerge, codeMerge, 'utf8')
@@ -89,7 +89,7 @@ function main() {
     let codeB64 = str2b64(codeMerge)
 
     //fnB64
-    let fnB64 = 'srcTemp/WConverwsClient_WebworkerMerge.b64'
+    let fnB64 = './srcTemp/WConverwsClient_WebworkerMerge.b64'
 
     //save
     fs.writeFileSync(fnB64, codeB64, 'utf8')

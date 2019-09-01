@@ -1,6 +1,6 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A webworker wrapper for client of w-converws in browser.",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {},
@@ -47,7 +47,7 @@
     "wsemi": "^1.2.25"
   },
   "scripts": {
-    "test": "mocha --require @babel/register",
+    "test": "./node_modules/.bin/mocha --require @babel/register",
     "deploy": "gh-pages -d docs"
   },
   "repository": {
