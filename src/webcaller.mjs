@@ -2,14 +2,59 @@ import EventEmitter from 'wolfy87-eventemitter'
 import genID from 'wsemi/src/genID.mjs'
 import genPm from 'wsemi/src/genPm.mjs'
 import isfun from 'wsemi/src/isfun.mjs'
-import b642u8arr from 'wsemi/src/b642u8arr.mjs'
+//import b642u8arr from 'wsemi/src/b642u8arr.mjs'
+import b642str from 'wsemi/src/b642str.mjs'
 
 
 //codeB64, 此處需提供worker執行程式碼, 因有特殊符號編譯困難, 故需先轉base64再使用
 let codeB64 = '{codeB64}'
 
-//codeU8A
-let codeU8A = b642u8arr(codeB64)
+//code
+//let code = b642u8arr(codeB64)
+let code = b642str(codeB64)
+
+
+function genWebWorker(code) {
+
+    //URL
+    let URL = window.URL || window.webkitURL
+
+    //blob
+    let blob
+    try {
+        //BlobBuilder for IE11, 依然有安全性問題
+        let BlobBuilder = window.BlobBuilder ||
+            window.WebKitBlobBuilder ||
+            window.MozBlobBuilder ||
+            window.MSBlobBuilder
+        blob = new BlobBuilder()
+        blob.append(code)
+        blob = blob.getBlob()
+        return new Worker(URL.createObjectURL(blob))
+    }
+    catch (e) {
+        //console.log('can not use BlobBuilder', e)
+    }
+
+    try {
+        //blob for Chrome 8+, Firefox 6+, Safari 6.0+, Opera 15+
+        blob = new Blob([code])
+        return new Worker(URL.createObjectURL(blob))
+    }
+    catch (e) {
+        //console.log('can not use Blob', e)
+    }
+
+    try {
+        //data:application/javascript for Opera 10.60 - 12
+        return new Worker('data:application/javascript,' + encodeURIComponent(code))
+    }
+    catch (e) {
+        //console.log('can not use application/javascript', e)
+    }
+
+    return null
+}
 
 
 /**
@@ -85,10 +130,17 @@ function WConverwsClientWebworker(opt) {
 
 
     //wk
-    let blob = new Blob([codeU8A], { type: 'text/javascript' })
-    let url = URL.createObjectURL(blob)
-    let wk = new Worker(url)
-    //let wk = new Worker('./wkapi/wscs_webworker.mjs')
+    // let blob = new Blob([code], { type: 'text/javascript' })
+    // let url = URL.createObjectURL(blob)
+    // let wk = new Worker(url)
+    // let wk = new Worker('./wkapi/wscs_webworker.mjs')
+    let wk = genWebWorker(code)
+
+
+    //check, IE11安全性問題
+    if (wk === null) {
+        return null
+    }
 
 
     function init(opt) {
