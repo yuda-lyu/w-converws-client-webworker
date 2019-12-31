@@ -20,17 +20,17 @@ wo.on('open', function() {
     console.log(`Server running at: ws://localhost:${opt.port}`)
 
     //broadcast
-    // let n = 0
-    // setInterval(() => {
-    //     n += 1
-    //     let o = {
-    //         text: `server broadcast hi(${n})`,
-    //         data: new Uint8Array([66, 97, 115]), //support Uint8Array data
-    //     }
-    //     wo.broadcast(o, function (prog) {
-    //         console.log('broadcast prog', prog)
-    //     })
-    // }, 1000)
+    let n = 0
+    setInterval(() => {
+        n += 1
+        let o = {
+            text: `server broadcast hi(${n})`,
+            data: new Uint8Array([66, 97, 115]), //support Uint8Array data
+        }
+        wo.broadcast(o, function (prog) {
+            console.log('broadcast prog', prog)
+        })
+    }, 1000)
 
 })
 wo.on('error', function(err) {
