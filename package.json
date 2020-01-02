@@ -1,6 +1,6 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "A webworker wrapper for client of w-converws in browser.",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {

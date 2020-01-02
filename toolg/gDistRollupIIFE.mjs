@@ -9,7 +9,7 @@ let bBanner = false
 
 
 rollupFiles({
-    fns: ['WConverwsClient.mjs'],
+    fns: 'WConverwsClient.mjs',
     fdSrc,
     fdTar,
     //nameDistType: 'kebabCase',
