@@ -1,6 +1,6 @@
-import EventEmitter from 'wolfy87-eventemitter'
 import genID from 'wsemi/src/genID.mjs'
 import genPm from 'wsemi/src/genPm.mjs'
+import Evem from 'wsemi/src/evem.mjs'
 import isfun from 'wsemi/src/isfun.mjs'
 //import b642u8arr from 'wsemi/src/b642u8arr.mjs'
 import b642str from 'wsemi/src/b642str.mjs'
@@ -126,7 +126,7 @@ function WConverwsClientWebworker(opt) {
 
 
     //ee
-    let ee = new EventEmitter()
+    let ee = new Evem()
 
 
     //wk
