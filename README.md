@@ -19,7 +19,7 @@ To view documentation or get support, visit [docs](https://yuda-lyu.github.io/w-
 
 [Necessary] Add script for w-converws-client-webworker.
 ```alias
-<script src="https://cdn.jsdelivr.net/npm/w-converws-client-webworker@1.0.16/dist/w-converws-client-webworker.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-converws-client-webworker@1.0.17/dist/w-converws-client-webworker.umd.js"></script>
 ```
 
 #### Example for w-converws-server:
@@ -40,45 +40,45 @@ let WConverwsClient=window['w-converws-client-webworker']
 let wo = new WConverwsClient(opt)
 
 wo.on('open', function() {
-    logData('client web: open')
+    console.log('client web: open')
 })
 wo.on('openOnce', function() {
-    logData('client web: openOnce')
+    console.log('client web: openOnce')
 
     //execute
     wo.execute('add', { p1: 1, p2: 2 },
         function (prog) {
-            logData('client web: execute prog=', prog)
+            console.log('client web: execute prog=', prog)
         })
         .then(function(r) {
-            logData('client web: execute: add=', r)
+            console.log('client web: execute: add=', r)
         })
 
     //broadcast
     wo.broadcast('client web: broadcast: hi', function (prog) {
-        logData('client web: broadcast prog=', prog)
+        console.log('client web: broadcast prog=', prog)
     })
 
     //deliver
     wo.deliver('client web: deliver: hi', function (prog) {
-        logData('client web: deliver prog=', prog)
+        console.log('client web: deliver prog=', prog)
     })
 
 })
 wo.on('close', function() {
-    logData('client web: close')
+    console.log('client web: close')
 })
 wo.on('error', function(err) {
-    logData('client web: error=', err)
+    console.log('client web: error=', err)
 })
 wo.on('reconn', function() {
-    logData('client web: reconn')
+    console.log('client web: reconn')
 })
 wo.on('broadcast', function(data) {
-    logData('client web: broadcast=', data)
+    console.log('client web: broadcast=', data)
 })
 // wo.on('deliver', function(data) { //can not receive deliver in client
-//     logData('client web: deliver=', data)
+//     console.log('client web: deliver=', data)
 // })
 
 // client web: open

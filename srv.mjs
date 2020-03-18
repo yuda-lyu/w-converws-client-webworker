@@ -2,14 +2,6 @@ import WConverwsServer from 'w-converws/dist/w-converws-server.umd.js'
 
 let opt = {
     port: 8080,
-    authenticate: function(token) {
-        //使用token驗證使用者身份
-        return new Promise(function(resolve, reject) {
-            setTimeout(function() {
-                resolve(true)
-            }, 1000)
-        })
-    },
 }
 
 //new
