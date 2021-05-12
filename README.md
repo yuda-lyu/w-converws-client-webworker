@@ -15,7 +15,7 @@ To view documentation or get support, visit [docs](https://yuda-lyu.github.io/w-
 ## Installation
 
 ### In a browser(UMD module):
-> **Note:** `w-converws-client-webworker` does't depend on any package.
+> **Note:** `w-converws-client-webworker` is not dependent on any package.
 
 [Necessary] Add script for w-converws-client-webworker.
 ```alias
