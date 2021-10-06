@@ -3,7 +3,6 @@ A webworker wrapper for client of w-converws in browser. It is an enhanced packa
 
 ![language](https://img.shields.io/badge/language-JavaScript-orange.svg) 
 [![npm version](http://img.shields.io/npm/v/w-converws-client-webworker.svg?style=flat)](https://npmjs.org/package/w-converws-client-webworker) 
-[![Build Status](https://travis-ci.org/yuda-lyu/w-converws-client-webworker.svg?branch=master)](https://travis-ci.org/yuda-lyu/w-converws-client-webworker) 
 [![license](https://img.shields.io/npm/l/w-converws-client-webworker.svg?style=flat)](https://npmjs.org/package/w-converws-client-webworker) 
 [![gzip file size](http://img.badgesize.io/yuda-lyu/w-converws-client-webworker/master/dist/w-converws-client-webworker-server.umd.js.svg?compression=gzip)](https://github.com/yuda-lyu/w-converws-client-webworker)
 [![npm download](https://img.shields.io/npm/dt/w-converws-client-webworker.svg)](https://npmjs.org/package/w-converws-client-webworker) 
