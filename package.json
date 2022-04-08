@@ -1,17 +1,17 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "A webworker wrapper for client of w-converws in browser.",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {
     "lodash": "^4.17.21",
-    "w-converws": "^1.0.29",
-    "wsemi": "^1.6.34"
+    "w-converws": "^1.0.30",
+    "wsemi": "^1.6.54"
   },
   "devDependencies": {
     "babel-preset-minify": "^0.5.1",
-    "promise-polyfill": "^8.2.1",
-    "w-package-tools": "^1.0.59"
+    "promise-polyfill": "^8.2.3",
+    "w-package-tools": "^1.0.65"
   },
   "scripts": {
     "test": "mocha --parallel --timeout 60000 --experimental-modules --es-module-specifier-resolution=node",
