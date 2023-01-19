@@ -1,17 +1,16 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.22",
-  "description": "A webworker wrapper for client of w-converws in browser.",
+  "version": "1.0.23",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {
     "lodash": "^4.17.21",
-    "w-converws": "^1.0.30",
-    "wsemi": "^1.6.54"
+    "w-converws": "^1.0.31",
+    "wsemi": "^1.6.87"
   },
   "devDependencies": {
-    "babel-preset-minify": "^0.5.1",
+    "babel-preset-minify": "^0.5.2",
     "promise-polyfill": "^8.2.3",
-    "w-package-tools": "^1.0.65"
+    "w-package-tools": "^1.0.66"
   },
   "scripts": {
     "test": "mocha --parallel --timeout 60000 --experimental-modules --es-module-specifier-resolution=node",
@@ -31,9 +30,5 @@
     "browser"
   ],
   "author": "yuda-lyu(semisphere)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/yuda-lyu/w-converws-client-webworker/issues"
-  },
-  "homepage": "https://github.com/yuda-lyu/w-converws-client-webworker#readme"
+  "license": "MIT"
 }
