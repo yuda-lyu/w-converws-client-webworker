@@ -1,16 +1,16 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {
     "lodash": "^4.17.21",
-    "w-converws": "^1.0.31",
-    "wsemi": "^1.6.87"
+    "w-converws": "^1.0.32",
+    "wsemi": "^1.7.2"
   },
   "devDependencies": {
     "babel-preset-minify": "^0.5.2",
-    "promise-polyfill": "^8.2.3",
-    "w-package-tools": "^1.0.66"
+    "promise-polyfill": "^8.3.0",
+    "w-package-tools": "^1.0.69"
   },
   "scripts": {
     "test": "mocha --parallel --timeout 60000 --experimental-modules --es-module-specifier-resolution=node",
