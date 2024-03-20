@@ -1,6 +1,6 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {
     "lodash-es": "^4.17.21",
