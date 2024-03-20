@@ -6,6 +6,7 @@ A webworker wrapper for client of w-converws in browser. It is an enhanced packa
 [![license](https://img.shields.io/npm/l/w-converws-client-webworker.svg?style=flat)](https://npmjs.org/package/w-converws-client-webworker) 
 [![gzip file size](http://img.badgesize.io/yuda-lyu/w-converws-client-webworker/master/dist/w-converws-client-webworker-server.umd.js.svg?compression=gzip)](https://github.com/yuda-lyu/w-converws-client-webworker)
 [![npm download](https://img.shields.io/npm/dt/w-converws-client-webworker.svg)](https://npmjs.org/package/w-converws-client-webworker) 
+[![npm download](https://img.shields.io/npm/dm/w-converws-client-webworker.svg)](https://npmjs.org/package/w-converws-client-webworker) 
 [![jsdelivr download](https://img.shields.io/jsdelivr/npm/hm/w-converws-client-webworker.svg)](https://www.jsdelivr.com/package/npm/w-converws-client-webworker)
 
 ## Documentation
@@ -18,7 +19,7 @@ To view documentation or get support, visit [docs](https://yuda-lyu.github.io/w-
 
 [Necessary] Add script for w-converws-client-webworker.
 ```alias
-<script src="https://cdn.jsdelivr.net/npm/w-converws-client-webworker@1.0.24/dist/w-converws-client-webworker.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-converws-client-webworker@1.0.25/dist/w-converws-client-webworker.umd.js"></script>
 ```
 
 #### Example for w-converws-server:
