@@ -20,7 +20,7 @@ function init(opt) {
         return
     }
 
-    //wo
+    //wo, 注意webworker.mjs是直接提供程式碼, 故此處WConverwsClient因無import會被eslint提示錯誤
     wo = new WConverwsClient(opt) //ie11會因為websocket於webworker內, 被視為需受安全性控管, 得將伺服器加入信賴區域, 或是移除限制
     wo.on('open', function() {
         //console.log('wk: open')
