@@ -1,16 +1,16 @@
-#node --experimental-modules --es-module-specifier-resolution=node toolg/addVersion.mjs
-node --experimental-modules --es-module-specifier-resolution=node toolg/modifyReadme.mjs
+#node toolg/addVersion.mjs
+node toolg/modifyReadme.mjs
 
-node --experimental-modules --es-module-specifier-resolution=node toolg/cleanFolder.mjs
+node toolg/cleanFolder.mjs
 ./node_modules/.bin/jsdoc -c .jsdoc
 
-node --experimental-modules --es-module-specifier-resolution=node toolg/gDistRollupIIFE.mjs
+node toolg/gDistRollupIIFE.mjs
 
-#¦]ª½±µ½Õ¥Îbabel¬G­n¦w¸Ëbabel-preset-minify
-node --experimental-modules --es-module-specifier-resolution=node toolg/gMergeWorker.mjs
-node --experimental-modules --es-module-specifier-resolution=node toolg/gMergeCaller.mjs
+#ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½babelï¿½Gï¿½nï¿½wï¿½ï¿½babel-preset-minify
+node toolg/gMergeWorker.mjs
+node toolg/gMergeCaller.mjs
 
-node --experimental-modules --es-module-specifier-resolution=node toolg/gDistRollupWorker.mjs
+node toolg/gDistRollupWorker.mjs
 
 git add .  -A
 git commit -m 'modify: '
