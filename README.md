@@ -17,7 +17,7 @@ To view documentation or get support, visit [docs](https://yuda-lyu.github.io/w-
 
 Add script for w-converws-client-webworker.
 ```alias
-<script src="https://cdn.jsdelivr.net/npm/w-converws-client-webworker@1.0.28/dist/w-converws-client-webworker.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-converws-client-webworker@1.0.29/dist/w-converws-client-webworker.umd.js"></script>
 ```
 
 #### Example for w-converws-server:
