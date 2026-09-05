@@ -1,10 +1,10 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {
-    "w-converws": "^1.0.47",
-    "wsemi": "^1.8.84"
+    "w-converws": "^1.0.48",
+    "wsemi": "^1.8.85"
   },
   "devDependencies": {
     "babel-preset-minify": "^0.5.2",
