@@ -12,6 +12,8 @@ node toolg/gMergeCaller.mjs
 
 node toolg/gDistRollupWorker.mjs
 
+node toolg/genDocsDist.mjs
+
 git add .  -A
 git commit -m 'modify: '
 git push origin master:master
