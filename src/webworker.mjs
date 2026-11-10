@@ -58,9 +58,50 @@ function init(opt) {
 }
 
 
-//sendMessage
+//toCloneable, 將不可structured clone之值改為可複製之摘要, 僅於postMessage拋DataCloneError時使用
+//Event(如WebSocket之error事件)取type, Error取message, 函數為'[Function]', 其餘不可複製之值取String; 陣列與純物件逐欄處理以保留可複製之欄位, 巢狀以10層為限
+//處理範圍限於實際會送出之形狀: w-converws-client之{ msg, err }(err為Error, Event, 字串, JSON資料或巢狀{ msg, err })與伺服器傳來之JSON資料
+function toCloneable(v, depth = 0) {
+    let t = typeof v
+    if (t === 'function') {
+        return '[Function]'
+    }
+    if (v === null || t !== 'object') {
+        return t === 'symbol' ? String(v) : v
+    }
+    if (v instanceof Event) {
+        return v.type
+    }
+    if (v instanceof Error) {
+        return v.message
+    }
+    if (depth < 10 && Array.isArray(v)) {
+        return v.map((x) => toCloneable(x, depth + 1))
+    }
+    if (depth < 10 && Object.prototype.toString.call(v) === '[object Object]') {
+        let o = Object.create(null) //null原型使'__proto__'鍵如一般鍵保留
+        Object.keys(v).forEach((k) => {
+            o[k] = toCloneable(v[k], depth + 1)
+        })
+        return o
+    }
+    return String(v)
+}
+
+
+//sendMessage, postMessage拋DataCloneError時改送摘要, 仍送不出(如通道已關閉)則放棄, 不外拋以免worker崩潰
 function sendMessage(data) {
-    self.postMessage(data)
+    try {
+        self.postMessage(data)
+    }
+    catch (err) {
+        try {
+            self.postMessage(toCloneable(data))
+        }
+        catch (err2) {
+            //放棄
+        }
+    }
 }
 
 

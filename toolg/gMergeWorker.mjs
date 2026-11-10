@@ -1,5 +1,5 @@
 import fs from 'fs'
-import bc from '@babel/core'
+import { minify } from 'terser'
 import str2b64 from 'wsemi/src/str2b64.mjs'
 import replace from 'wsemi/src/replace.mjs'
 
@@ -31,7 +31,7 @@ function getCodeIIFE() {
 }
 
 
-function getCodeWorker() {
+async function getCodeWorker() {
 
     //fnWorker
     let fnWorker = './src/webworker.mjs'
@@ -39,20 +39,18 @@ function getCodeWorker() {
     //codeWorker
     let codeWorker = fs.readFileSync(fnWorker, 'utf8')
 
-    //complie and minify
-    codeWorker = bc.transform(codeWorker, {
-        presets: [
-            'minify',
-            {
-                comments: false,
-            },
-            ['@babel/preset-env', {
-                'useBuiltIns': 'entry',
-                'corejs': 3
-            }]
-        ]
+    //minify, 僅壓縮不轉譯(不依賴babel, 不論babel為何版本皆可執行), 預設不壓縮頂層名稱(toplevel:false)故頂層結構與worker全域名稱不變
+    let r = await minify(codeWorker, {
+        format: {
+            comments: false,
+        },
     })
-    codeWorker = codeWorker.code
+    codeWorker = r.code
+
+    //check
+    if (typeof codeWorker !== 'string' || codeWorker === '') {
+        throw new Error('invalid minified code of worker')
+    }
 
     return codeWorker
 }
@@ -71,10 +69,10 @@ function clearCode(code) {
 }
 
 
-function main() {
+async function main() {
 
     //codeMerge
-    let codeMerge = getCodePromise() + getCodeIIFE() + getCodeWorker()
+    let codeMerge = getCodePromise() + getCodeIIFE() + await getCodeWorker()
 
     //clearCode
     codeMerge = clearCode(codeMerge)
@@ -95,5 +93,5 @@ function main() {
     fs.writeFileSync(fnB64, codeB64, 'utf8')
 
 }
-main()
+await main()
 

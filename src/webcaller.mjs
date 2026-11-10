@@ -60,6 +60,16 @@ function genWebWorker(code) {
 /**
  * 於瀏覽器(Browser)通過Web Worker建立WebSocket使用者端物件
  *
+ * 監聽error事件所得資料之形狀，及其與非Web Worker版w-converws-client之差異:
+ *
+ * 1. 形狀: 與w-converws-client相同，為{ msg: String, err: * }，msg為'can not create websocket'、'websocket error'、'can not find _id and output in data'、'can not send message'等。另外Worker端收到未知type時，資料為字串'type error: <type>'(此為本套件Worker端自身通報，非w-converws-client之形狀)
+ * 2. 差異: 非Web Worker版之err為原物件(如瀏覽器WebSocket之Event物件)；本套件之資料需經postMessage(structured clone)由Worker傳回呼叫端，而Event、函數、Symbol等不可複製之值會使postMessage拋DataCloneError。故Worker端照原資料傳送，拋DataCloneError時才改送可複製之摘要，此時呼叫端收到的err為摘要而非原物件
+ * 3. 摘要規則: 可複製之欄位(字串、數字、null、陣列、純物件等)保留；Event(如WebSocket連線錯誤事件)改為其type字串(通常為'error')；Error改為其message字串；函數改為'[Function]'；其餘不可複製之值與巢狀超過10層者改為String(值)。例如連不上伺服器時收到{ msg: 'websocket error', err: 'error' }
+ * 4. 可複製之err(字串、JSON資料，及瀏覽器支援複製Error時之Error物件)不轉換，原樣傳回；摘要仍無法送出時(如通道已關閉)該則訊息放棄，不使Worker崩潰
+ * 5. 因此呼叫端無法取得原Event物件(含target)
+ *
+ * broadcast與deliver事件、execute結果之資料來自伺服器端之JSON，本即可複製，原樣傳回。
+ *
  * @class
  * @param {Object} opt 輸入設定參數物件
  * @param {String} [opt.url='ws://localhost:8080'] 輸入WebSocket伺服器ws網址，預設為'ws://localhost:8080'
@@ -110,6 +120,7 @@ function genWebWorker(code) {
  * })
  * wo.on('error', function(err) {
  *     console.log('client web: error=', err)
+ *     //連不上伺服器時, err為{ msg: 'websocket error', err: 'error' }, 其err為字串摘要
  * })
  * wo.on('reconn', function() {
  *     console.log('client web: reconn')

@@ -86,3 +86,16 @@ wo.on('broadcast', function(data) {
 // client web: deliver prog=100
 // client web: execute: add=3
 ```
+
+#### Data of the `error` event:
+The data has the same shape as `w-converws-client` (the version not running in a Web Worker), `{ msg: String, err: * }`, for example `{ msg: 'websocket error', err: 'error' }` when the server cannot be reached. The difference is that data must be passed from the Web Worker to the caller via `postMessage` (structured clone), and values that cannot be cloned (such as the `Event` object of a WebSocket error) would make `postMessage` throw `DataCloneError`. So the Web Worker sends the data as is, and only when `DataCloneError` is thrown, sends a cloneable summary instead, in which `err` is a summary instead of the original object:
+
+| Value in the Web Worker | Value received by the caller |
+| --- | --- |
+| string, number, `null`, array, plain object | kept |
+| `Event` (such as the WebSocket error event) | its `type` string, usually `'error'` |
+| `Error` | its `message` string |
+| function | `'[Function]'` |
+| other values that cannot be cloned, or nesting deeper than 10 levels | `String(value)` |
+
+Data that can be cloned (a string, JSON data, or an `Error` in browsers that can clone it) is not converted and is passed as is. Therefore the original `Event` object (with `target`) is not available to the caller. If even the summary cannot be sent (for example the channel is closed), the message is dropped and the worker does not crash. When the worker receives a message of an unknown `type`, the data of `error` is the string `'type error: <type>'`. Data of `broadcast`, `deliver` and the result of `execute` comes from JSON of the server, so it is cloneable and passed as is.
