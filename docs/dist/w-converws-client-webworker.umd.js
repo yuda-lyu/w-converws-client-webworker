@@ -1,5 +1,5 @@
 /*!
- * w-converws-client-webworker v1.0.64
+ * w-converws-client-webworker v1.0.65
  * (c) 2018-2021 yuda-lyu(semisphere)
  * Released under the MIT License.
  */
