@@ -1,10 +1,10 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.82",
+  "version": "1.0.83",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {
-    "w-converws": "^1.0.87",
-    "wsemi": "^1.9.74"
+    "w-converws": "^1.0.88",
+    "wsemi": "^1.9.76"
   },
   "devDependencies": {
     "promise-polyfill": "^8.3.0",
