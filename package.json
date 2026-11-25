@@ -1,15 +1,15 @@
 {
   "name": "w-converws-client-webworker",
-  "version": "1.0.83",
+  "version": "1.0.84",
   "main": "dist/w-converws-client-webworker.umd.js",
   "dependencies": {
-    "w-converws": "^1.0.88",
-    "wsemi": "^1.9.76"
+    "w-converws": "^1.0.89",
+    "wsemi": "^1.9.77"
   },
   "devDependencies": {
     "promise-polyfill": "^8.3.0",
     "terser": "^5.16.8",
-    "w-package-tools": "^1.1.30"
+    "w-package-tools": "^1.1.31"
   },
   "scripts": {
     "test": "mocha --parallel \"test/*.test.mjs\" --timeout 180000",
